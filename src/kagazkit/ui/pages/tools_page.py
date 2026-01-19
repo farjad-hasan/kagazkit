@@ -7,41 +7,52 @@ from ...core.actions import PDFManager
 
 
 class ToolsPage(ctk.CTkFrame):
+    """
+    Page for additional PDF tools (Split, Rotate).
+    """
     def __init__(self, master):
         super().__init__(master, fg_color="transparent")
         
+        # Header
         self.header = ctk.CTkLabel(self, text="PDF Tools", font=ctk.CTkFont(size=20, weight="bold"))
         self.header.pack(pady=10)
         
-        # Split Section
-        self.split_frame = ctk.CTkFrame(self)
-        self.split_frame.pack(fill="x", padx=10, pady=10)
+        # Tools Container
+        self.scrollable = ctk.CTkScrollableFrame(self, fg_color="transparent")
+        self.scrollable.pack(fill="both", expand=True, padx=10, pady=10)
         
-        ctk.CTkLabel(self.split_frame, text="Split PDF (Extract Pages)", font=ctk.CTkFont(size=14, weight="bold")).pack(pady=5)
+        # Split Tool
+        self.create_tool_card(
+            self.scrollable, 
+            "Split PDF", 
+            "Split a PDF into separate files (one per page).",
+            self.run_split
+        )
         
-        self.split_btn = ctk.CTkButton(self.split_frame, text="Select PDF to Split", command=self.run_split)
-        self.split_btn.pack(pady=10)
+        # Rotate Tool
+        self.create_tool_card(
+            self.scrollable, 
+            "Rotate PDF", 
+            "Rotate all pages of a PDF (90, 180, 270 degrees).",
+            self.run_rotate
+        )
+
+    def create_tool_card(self, master, title, description, command):
+        card = ctk.CTkFrame(master)
+        card.pack(fill="x", pady=5, padx=5)
         
-        # Rotate Section
-        self.rotate_frame = ctk.CTkFrame(self)
-        self.rotate_frame.pack(fill="x", padx=10, pady=10)
+        lbl_title = ctk.CTkLabel(card, text=title, font=ctk.CTkFont(size=16, weight="bold"))
+        lbl_title.pack(anchor="w", padx=10, pady=(10, 0))
         
-        ctk.CTkLabel(self.rotate_frame, text="Rotate PDF", font=ctk.CTkFont(size=14, weight="bold")).pack(pady=5)
+        lbl_desc = ctk.CTkLabel(card, text=description, font=ctk.CTkFont(size=12))
+        lbl_desc.pack(anchor="w", padx=10, pady=(0, 10))
         
-        self.rotation_var = ctk.IntVar(value=90)
-        self.radio_90 = ctk.CTkRadioButton(self.rotate_frame, text="90° Clockwise", variable=self.rotation_var, value=90)
-        self.radio_90.pack(pady=2)
-        self.radio_180 = ctk.CTkRadioButton(self.rotate_frame, text="180°", variable=self.rotation_var, value=180)
-        self.radio_180.pack(pady=2)
-        self.radio_270 = ctk.CTkRadioButton(self.rotate_frame, text="270° Clockwise", variable=self.rotation_var, value=270)
-        self.radio_270.pack(pady=2)
-        
-        self.rotate_btn = ctk.CTkButton(self.rotate_frame, text="Select PDF to Rotate", command=self.run_rotate)
-        self.rotate_btn.pack(pady=10)
+        btn = ctk.CTkButton(card, text="Open Tool", command=command)
+        btn.pack(side="right", padx=10, pady=10)
 
     def run_split(self):
-        file = filedialog.askopenfilename(filetypes=[("PDF Files", "*.pdf")])
-        if not file:
+        file_path = filedialog.askopenfilename(filetypes=[("PDF Files", "*.pdf")])
+        if not file_path:
             return
             
         output_dir = filedialog.askdirectory(title="Select Output Directory")
@@ -49,22 +60,40 @@ class ToolsPage(ctk.CTkFrame):
             return
             
         try:
-            files = PDFManager.split_pdf(file, output_dir)
-            tkinter.messagebox.showinfo("Success", f"Split into {len(files)} pages successfully!")
+            results = PDFManager.split_pdf(file_path, output_dir)
+            tkinter.messagebox.showinfo("Success", f"PDF split into {len(results)} files!")
         except Exception as e:
             tkinter.messagebox.showerror("Error", str(e))
 
     def run_rotate(self):
-        file = filedialog.askopenfilename(filetypes=[("PDF Files", "*.pdf")])
-        if not file:
+        file_path = filedialog.askopenfilename(filetypes=[("PDF Files", "*.pdf")])
+        if not file_path:
             return
             
-        output_file = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF Files", "*.pdf")])
-        if not output_file:
+        # Rotation dialog
+        dialog = ctk.CTkInputDialog(text="Enter rotation degrees (90, 180, 270):", title="Rotate PDF")
+        res = dialog.get_input()
+        
+        if not res:
             return
             
         try:
-            PDFManager.rotate_pdf(file, output_file, self.rotation_var.get())
-            tkinter.messagebox.showinfo("Success", "PDF Rotated successfully!")
-        except Exception as e:
+            rotation = int(res)
+            if rotation not in [90, 180, 270]:
+                raise ValueError("Rotation must be 90, 180, or 270.")
+        except ValueError as e:
             tkinter.messagebox.showerror("Error", str(e))
+            return
+            
+        output_file = filedialog.asksaveasfilename(
+            defaultextension=".pdf",
+            filetypes=[("PDF Files", "*.pdf")],
+            title="Save Rotated PDF"
+        )
+        
+        if output_file:
+            try:
+                PDFManager.rotate_pdf(file_path, output_file, rotation)
+                tkinter.messagebox.showinfo("Success", "PDF rotated successfully!")
+            except Exception as e:
+                tkinter.messagebox.showerror("Error", str(e))

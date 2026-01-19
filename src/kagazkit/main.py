@@ -1,5 +1,5 @@
 """
-Entry point for PDF Master application.
+Entry point for KagazKit application.
 """
 import os
 import sys
@@ -13,6 +13,7 @@ from kagazkit.ui.app import PDFMasterApp
 def main():
     app = PDFMasterApp()
     app.mainloop()
+
 
 if __name__ == "__main__":
     main()
