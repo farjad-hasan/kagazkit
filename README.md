@@ -19,6 +19,16 @@
 
 ## Installation
 
+### Via pip (Recommended)
+
+KagazKit is available on PyPI and can be installed directly using pip:
+
+```bash
+pip install kagazkit
+```
+
+### From Source
+
 1.  Clone the repository:
     ```bash
     git clone https://github.com/farjad-hasan/kagazkit.git
