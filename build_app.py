@@ -1,6 +1,7 @@
-import PyInstaller.__main__
 import os
+
 import customtkinter
+import PyInstaller.__main__
 import tkinterdnd2
 
 # Get paths for dependencies
