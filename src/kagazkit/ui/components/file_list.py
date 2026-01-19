@@ -1,7 +1,8 @@
-import customtkinter as ctk
 import os
-from pathlib import Path
-from typing import List, Callable, Optional
+from typing import Callable, List
+
+import customtkinter as ctk
+
 
 class FileItem(ctk.CTkFrame):
     """

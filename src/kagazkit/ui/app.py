@@ -1,11 +1,11 @@
 """
 Main application window module.
 """
-import tkinter as tk
 import customtkinter as ctk
 from tkinterdnd2 import TkinterDnD
-from .pages.merge_page import MergePage
+
 from .pages.image_page import ImagePage
+from .pages.merge_page import MergePage
 from .pages.tools_page import ToolsPage
 
 # Set theme

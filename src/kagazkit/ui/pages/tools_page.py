@@ -1,7 +1,10 @@
-import customtkinter as ctk
 import tkinter.messagebox
 from tkinter import filedialog
-from ...core.actions import PDFManager, PDFActionError
+
+import customtkinter as ctk
+
+from ...core.actions import PDFManager
+
 
 class ToolsPage(ctk.CTkFrame):
     def __init__(self, master):

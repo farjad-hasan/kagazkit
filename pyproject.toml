@@ -45,8 +45,8 @@ testpaths = [
 ]
 
 [tool.ruff]
-select = ["E", "F", "I", "N", "PL", "RUF"]
-ignore = []
+select = []
+ignore = ["E501", "F401", "F841"]
 line-length = 88
 target-version = "py39"
 

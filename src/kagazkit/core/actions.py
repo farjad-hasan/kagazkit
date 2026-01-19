@@ -5,9 +5,12 @@ Contains the business logic for merging PDFs and converting images to PDFs.
 
 from pathlib import Path
 from typing import List, Union
-from PyPDF2 import PdfMerger, PdfReader, PdfWriter
+
 from PIL import Image
-from .validators import Validator, FileValidationError
+from PyPDF2 import PdfMerger, PdfReader, PdfWriter
+
+from .validators import FileValidationError, Validator
+
 
 class PDFActionError(Exception):
     """Custom exception for action failures."""

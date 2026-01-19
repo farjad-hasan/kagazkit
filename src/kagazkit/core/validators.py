@@ -3,9 +3,9 @@ Input validation module for PDF Master.
 Handles security checks for file inputs, ensuring only valid and safe files are processed.
 """
 
-import os
 from pathlib import Path
 from typing import List, Union
+
 
 class FileValidationError(Exception):
     """Custom exception for file validation failures."""

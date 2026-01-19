@@ -1,10 +1,13 @@
-import customtkinter as ctk
+import threading
 import tkinter.messagebox
 from tkinter import filedialog
+
+import customtkinter as ctk
 from tkinterdnd2 import DND_FILES
+
+from ...core.actions import PDFManager
 from ..components.file_list import FileList
-from ...core.actions import PDFManager, PDFActionError
-import threading
+
 
 class ImagePage(ctk.CTkFrame):
     """
@@ -94,7 +97,7 @@ class ImagePage(ctk.CTkFrame):
         if success:
             tkinter.messagebox.showinfo("Success", message)
         else:
-             tkinter.messagebox.showerror("Error", message)
+            tkinter.messagebox.showerror("Error", message)
 
     def set_loading_state(self, is_loading):
         if is_loading:

@@ -1,10 +1,13 @@
-import customtkinter as ctk
+import threading
 import tkinter.messagebox
 from tkinter import filedialog
+
+import customtkinter as ctk
 from tkinterdnd2 import DND_FILES
+
+from ...core.actions import PDFManager
 from ..components.file_list import FileList
-from ...core.actions import PDFManager, PDFActionError
-import threading
+
 
 class MergePage(ctk.CTkFrame):
     """
@@ -86,14 +89,14 @@ class MergePage(ctk.CTkFrame):
             PDFManager.merge_pdfs(paths, output_file)
             self.after(0, lambda: self._on_merge_complete(True, f"Merged {len(paths)} files successfully!"))
         except Exception as e:
-             self.after(0, lambda: self._on_merge_complete(False, str(e)))
+            self.after(0, lambda: self._on_merge_complete(False, str(e)))
 
     def _on_merge_complete(self, success, message):
         self.set_loading_state(False)
         if success:
             tkinter.messagebox.showinfo("Success", message)
         else:
-             tkinter.messagebox.showerror("Error", message)
+            tkinter.messagebox.showerror("Error", message)
 
     def set_loading_state(self, is_loading):
         if is_loading:
