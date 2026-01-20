@@ -58,7 +58,8 @@ class Validator:
             except Exception:
                 pass
         try:
-            header = path.read_bytes()[:8]
+            with open(path, "rb") as f:
+                header = f.read(8)
         except Exception:
             return False
         if header.startswith(Validator._PNG_SIGNATURE):
