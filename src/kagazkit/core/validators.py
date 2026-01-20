@@ -1,6 +1,7 @@
-import imghdr
 from pathlib import Path
 from typing import List, Union
+
+from PIL import Image
 
 
 class FileValidationError(Exception):
@@ -43,7 +44,9 @@ class Validator:
             return False
             
         try:
-            return imghdr.what(path) in {'png', 'jpeg'}
+            with Image.open(path) as img:
+                img.verify()
+                return img.format in {"PNG", "JPEG"}
         except Exception:
             return False
 
