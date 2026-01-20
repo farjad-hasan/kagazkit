@@ -48,7 +48,11 @@ class Validator:
                 img.verify()
                 return img.format in {"PNG", "JPEG"}
         except Exception:
-            return False
+            try:
+                with Image.open(path) as img:
+                    return img.format in {"PNG", "JPEG"}
+            except Exception:
+                return False
 
     @staticmethod
     def validate_pdf(file_path: Union[str, Path]):
