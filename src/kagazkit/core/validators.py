@@ -48,21 +48,24 @@ class Validator:
         try:
             with Image.open(path) as img:
                 img.verify()
-                return img.format in {"PNG", "JPEG"}
+                if img.format in {"PNG", "JPEG"}:
+                    return True
         except Exception:
             try:
                 with Image.open(path) as img:
-                    return img.format in {"PNG", "JPEG"}
+                    if img.format in {"PNG", "JPEG"}:
+                        return True
             except Exception:
-                try:
-                    header = path.read_bytes()[:8]
-                except Exception:
-                    return False
-                if header.startswith(Validator._PNG_SIGNATURE):
-                    return True
-                if header.startswith(Validator._JPEG_SIGNATURE):
-                    return True
-                return False
+                pass
+        try:
+            header = path.read_bytes()[:8]
+        except Exception:
+            return False
+        if header.startswith(Validator._PNG_SIGNATURE):
+            return True
+        if header.startswith(Validator._JPEG_SIGNATURE):
+            return True
+        return False
 
     @staticmethod
     def validate_pdf(file_path: Union[str, Path]):
