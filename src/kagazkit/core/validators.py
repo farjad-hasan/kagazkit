@@ -1,6 +1,7 @@
-import imghdr
 from pathlib import Path
 from typing import List, Union
+
+from PIL import Image
 
 
 class FileValidationError(Exception):
@@ -13,6 +14,8 @@ class Validator:
     """
     ALLOWED_PDF_HEADER = b"%PDF"
     ALLOWED_IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg'}
+    _PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
+    _JPEG_SIGNATURE = b"\xff\xd8\xff"
 
     @staticmethod
     def is_pdf(file_path: Union[str, Path]) -> bool:
@@ -43,9 +46,23 @@ class Validator:
             return False
             
         try:
-            return imghdr.what(path) in {'png', 'jpeg'}
+            with Image.open(path) as img:
+                img.verify()
+                return img.format in {"PNG", "JPEG"}
         except Exception:
-            return False
+            try:
+                with Image.open(path) as img:
+                    return img.format in {"PNG", "JPEG"}
+            except Exception:
+                try:
+                    header = path.read_bytes()[:8]
+                except Exception:
+                    return False
+                if header.startswith(Validator._PNG_SIGNATURE):
+                    return True
+                if header.startswith(Validator._JPEG_SIGNATURE):
+                    return True
+                return False
 
     @staticmethod
     def validate_pdf(file_path: Union[str, Path]):
