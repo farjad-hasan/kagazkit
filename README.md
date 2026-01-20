@@ -65,6 +65,10 @@ python src/kagazkit/main.py
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
+## Releasing
+
+See [RELEASE.md](RELEASE.md) for the release checklist, including drafting a GitHub release and publishing to PyPI.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
