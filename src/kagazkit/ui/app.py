@@ -1,16 +1,18 @@
 import customtkinter as ctk
+from tkinterdnd2 import TkinterDnD
 
 from .pages.image_page import ImagePage
 from .pages.merge_page import MergePage
 from .pages.tools_page import ToolsPage
 
 
-class PDFMasterApp(ctk.CTk):
+class PDFMasterApp(ctk.CTk, TkinterDnD.DnDWrapper):
     """
     Main Application class for KagazKit.
     """
     def __init__(self):
         super().__init__()
+        self.TkdndVersion = TkinterDnD._require(self)
 
         self.title("KagazKit")
         self.geometry("1100x700")
