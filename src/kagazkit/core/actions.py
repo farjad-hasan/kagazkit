@@ -40,7 +40,7 @@ class PDFManager:
         Converts multiple images into a single PDF.
         """
         try:
-            valid_paths = Validator.validate_paths(image_paths)
+            valid_paths = Validator.validate_paths(image_paths, mode="image")
             if not valid_paths:
                 raise PDFActionError("No valid images provided")
 
