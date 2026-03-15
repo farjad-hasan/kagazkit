@@ -2,6 +2,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
+from PIL import Image
 
 from kagazkit.core.actions import PDFActionError, PDFManager
 
@@ -100,3 +101,15 @@ class TestPDFManager:
         # Ensure save was called on first image
         img1.save.assert_called_once()
         mock_validator.assert_called_once_with(["1.png", "2.jpg"], mode="image")
+
+    def test_convert_images_creates_valid_pdf_from_real_image(self, tmp_path):
+        image_path = tmp_path / "sample.jpg"
+        output_path = tmp_path / "sample.pdf"
+
+        Image.new("RGB", (32, 32), color=(255, 0, 0)).save(image_path, "JPEG")
+
+        result = PDFManager.convert_images_to_pdf([image_path], output_path)
+
+        assert result == output_path
+        assert output_path.exists()
+        assert output_path.read_bytes().startswith(b"%PDF")

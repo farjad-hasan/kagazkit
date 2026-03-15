@@ -15,7 +15,7 @@ We take the security of KagazKit seriously. If you believe you have found a secu
 
 Instead, please report it via one of the following methods:
 
-1. **Email**: [INSERT EMAIL ADDRESS]
+1. **Email**: farjad.developer@gmail.com
 2. **GitHub Private Reporting**: If available, use the "Report a vulnerability" button in the Security tab.
 
 We will acknowledge your report within 48 hours and provide a timeline for a fix if applicable. Please provide as much detail as possible, including steps to reproduce.
