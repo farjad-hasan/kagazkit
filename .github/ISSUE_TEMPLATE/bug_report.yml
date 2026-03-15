@@ -1,0 +1,66 @@
+name: Bug report
+description: Report a reproducible problem in KagazKit.
+title: "[BUG] "
+labels:
+  - bug
+body:
+  - type: input
+    id: version
+    attributes:
+      label: KagazKit version
+      description: The app or package version where the problem occurs.
+      placeholder: "0.1.6"
+    validations:
+      required: true
+  - type: dropdown
+    id: install_method
+    attributes:
+      label: Install method
+      options:
+        - Windows .exe release
+        - pip install kagazkit
+        - Source checkout
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Operating system and Python version
+      description: Example: Windows 11, Python 3.10
+      placeholder: Windows 11, Python 3.10
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Provide the shortest reliable path to reproduce the issue.
+      placeholder: |
+        1. Open ...
+        2. Add ...
+        3. Click ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Sample files or screenshots
+      description: Share screenshots, logs, or safe-to-share sample files when possible.
+      placeholder: Describe attachments or drag them into the issue.
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else that would help reproduce or debug the issue.
