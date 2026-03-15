@@ -15,7 +15,6 @@ PyInstaller.__main__.run([
     '--windowed',
     f'--add-data={ctk_path};customtkinter/',
     f'--add-data={dnd_path};tkinterdnd2/',
-    '--hidden-import=PIL._tkinter_guess_binary',
     '--clean',
     '--noconfirm',
 ])
