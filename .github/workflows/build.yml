@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -18,10 +18,10 @@ jobs:
         python-version: ["3.9", "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
@@ -44,16 +44,79 @@ jobs:
         # Run unit tests
         pytest
 
+  package-validation:
+    name: Package Validation
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install packaging tools
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install build twine
+
+    - name: Build distributions
+      run: |
+        python -m build --sdist --wheel --outdir release-dist
+
+    - name: Check built metadata
+      run: |
+        python -m twine check release-dist/*
+
+    - name: Smoke-test installed wheel
+      run: |
+        python -m venv wheel-smoke-venv
+        source wheel-smoke-venv/bin/activate
+        python -m pip install --upgrade pip
+        python -m pip install release-dist/*.whl
+        python -c "import kagazkit; print(kagazkit.__version__)"
+
+  windows-exe:
+    name: Windows EXE Build
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if (Test-Path requirements.txt) { pip install -r requirements.txt }
+        pip install -e .
+        pip install pyinstaller
+
+    - name: Build Windows executable
+      run: |
+        python build_app.py
+        if (!(Test-Path dist\KagazKit.exe)) { throw "KagazKit.exe was not generated" }
+
+    - name: Upload Windows executable artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: KagazKit-windows-exe
+        path: dist/KagazKit.exe
+
   check:
     name: Build and Test
     runs-on: ubuntu-latest
-    needs: build
+    needs: [test, package-validation, windows-exe]
     if: always()
     steps:
       - name: Check build status
         run: |
-          if [[ "${{ needs.build.result }}" != "success" ]]; then
-            echo "Build failed"
+          if [[ "${{ needs.test.result }}" != "success" || "${{ needs.package-validation.result }}" != "success" || "${{ needs.windows-exe.result }}" != "success" ]]; then
+            echo "One or more required jobs failed"
             exit 1
           fi
-          echo "Build passed"
+          echo "All required jobs passed"

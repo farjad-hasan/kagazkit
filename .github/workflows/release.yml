@@ -23,6 +23,7 @@ jobs:
         python -m
         pip install
         build
+        twine
         --user
     - name: Build a binary wheel and a source tarball
       run: >-
@@ -31,5 +32,10 @@ jobs:
         --sdist
         --wheel
         --outdir dist/
+    - name: Validate built artifacts
+      run: >-
+        python -m
+        twine check
+        dist/*
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1

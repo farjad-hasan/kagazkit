@@ -7,6 +7,7 @@ release page aligned with PyPI.
 
 - Bump the version in `pyproject.toml`.
 - Ensure `kagazkit.__version__` reflects the same version (if used).
+- Add or update the matching entry in `CHANGELOG.md`.
 
 ## 2) Validate locally (optional but recommended)
 
@@ -47,3 +48,13 @@ python -m twine upload release-dist/*
 
 - Attach the latest `KagazKit.exe` if you are publishing the Windows binary.
 - Publish the release draft after PyPI upload succeeds.
+
+## 7) Release acceptance checklist
+
+- `pytest` passes on the release candidate.
+- Package build succeeds.
+- `twine check` passes for the built artifacts.
+- Windows `.exe` build succeeds.
+- The GitHub release has the correct tag and release notes.
+- The packaged `KagazKit.exe` is attached when publishing the Windows binary.
+- The tag-triggered PyPI workflow succeeds.

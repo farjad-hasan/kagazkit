@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: KagazKit Support Guidance
+    url: https://github.com/farjad-hasan/kagazkit/blob/main/SUPPORT.md
+    about: Read the support guidance before opening a general usage issue.
+  - name: Security Reporting Policy
+    url: https://github.com/farjad-hasan/kagazkit/security/policy
+    about: Report security issues privately instead of opening a public issue.

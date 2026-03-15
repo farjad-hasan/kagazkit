@@ -4,6 +4,14 @@ All notable changes to KagazKit will be documented in this file.
 
 This project follows a simple, release-based changelog.
 
+## [Unreleased]
+
+### Changed
+
+- Expanded project governance, contributor guidance, support policy, and release documentation.
+- Added stronger CI expectations for package validation and Windows release confidence.
+- Increased real-file test coverage for core PDF and image workflows.
+
 ## [0.1.6] - 2026-03-15
 
 ### Changed

@@ -17,6 +17,30 @@
 - **Tools**: Split and Rotate PDFs functionality.
 - **Drag & Drop**: Intuitive file management.
 
+## Supported Platforms
+
+| Platform | Install Method | Status |
+| --- | --- | --- |
+| Windows 10/11 | Packaged `.exe` release | Supported |
+| Windows 10/11 | `pip install kagazkit` | Supported |
+| Linux | Source install | Best effort |
+| macOS | Source install | Best effort |
+
+| Python | Status |
+| --- | --- |
+| 3.9 | Supported |
+| 3.10 | Supported |
+| 3.11 | Supported |
+
+## Supported File Types
+
+| Workflow | Supported Inputs | Output |
+| --- | --- | --- |
+| Merge PDFs | `.pdf` | merged `.pdf` |
+| Images to PDF | `.png`, `.jpg`, `.jpeg` | `.pdf` |
+| Split PDF | `.pdf` | one `.pdf` per page |
+| Rotate PDF | `.pdf` | rotated `.pdf` |
+
 ## Installation
 
 ### Via pip (Recommended)
@@ -26,6 +50,10 @@ KagazKit is available on PyPI and can be installed directly using pip:
 ```bash
 pip install kagazkit
 ```
+
+### Windows `.exe`
+
+Download the latest packaged Windows build from the [GitHub Releases](https://github.com/farjad-hasan/kagazkit/releases) page when you want a no-Python install.
 
 ### From Source
 
@@ -61,6 +89,25 @@ kagazkit
 python src/kagazkit/main.py
 ```
 
+For concrete workflows and expected inputs, see [docs/usage.md](docs/usage.md).
+
+## Troubleshooting
+
+- If image-to-PDF fails, confirm the file is `.png`, `.jpg`, or `.jpeg` and not a renamed unsupported format.
+- If you are using the Windows `.exe`, compare its version against the latest GitHub release before reporting a conversion issue.
+- If packaging commands fail locally with `No module named build.__main__`, follow the parent-directory build instructions in [RELEASE.md](RELEASE.md).
+
+## Maintainer and Support
+
+KagazKit is primarily maintained by Farjad Hasan.
+
+- Pull requests and issues are reviewed on a best-effort basis.
+- Security reports should follow [SECURITY.md](SECURITY.md) instead of public issues.
+- General usage questions and bug reports should go through [GitHub Issues](https://github.com/farjad-hasan/kagazkit/issues) or the guidance in [SUPPORT.md](SUPPORT.md).
+- Acknowledgement targets:
+  - security reports: within 48 hours
+  - standard issues and pull requests: best effort, typically within 7 days
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
@@ -73,6 +120,8 @@ See [RELEASE.md](RELEASE.md) for the release checklist, including drafting a Git
 
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 - Security policy: [SECURITY.md](SECURITY.md)
+- Support policy: [SUPPORT.md](SUPPORT.md)
+- Usage examples: [docs/usage.md](docs/usage.md)
 - Issue tracker: [GitHub Issues](https://github.com/farjad-hasan/kagazkit/issues)
 
 ## License

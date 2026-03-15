@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest an improvement to KagazKit.
+title: "[FEATURE] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What user problem or workflow gap does this address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the change you want to see.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe any workarounds or alternative ideas you considered.
+  - type: textarea
+    id: impact
+    attributes:
+      label: User impact
+      description: Who benefits and how often this would be used.
+*** Delete File: D:\repos\kagazkit\.github\ISSUE_TEMPLATE\bug_report.md
