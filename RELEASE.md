@@ -19,8 +19,16 @@ python -m pytest
 
 ```bash
 python -m pip install --upgrade build twine
-python -m build
-python -m twine check dist/*
+```
+
+If you are building from a working tree that already contains the local PyInstaller
+`build/` directory, run the packaging build from the parent directory so the
+repository's `build/` folder does not shadow the `build` Python module:
+
+```bash
+cd ..
+path\to\python -m build --outdir kagazkit/release-dist kagazkit
+path\to\python -m twine check kagazkit/release-dist/*
 ```
 
 ## 4) Draft a GitHub release
@@ -32,9 +40,10 @@ python -m twine check dist/*
 ## 5) Publish to PyPI
 
 ```bash
-python -m twine upload dist/*
+python -m twine upload release-dist/*
 ```
 
 ## 6) Finalize the GitHub release
 
+- Attach the latest `KagazKit.exe` if you are publishing the Windows binary.
 - Publish the release draft after PyPI upload succeeds.

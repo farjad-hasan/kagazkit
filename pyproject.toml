@@ -10,10 +10,10 @@ readme = "README.md"
 authors = [
   { name = "Farjad Hasan" },
 ]
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = ["LICENSE"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 requires-python = ">=3.9"
@@ -31,6 +31,8 @@ kagazkit = "kagazkit.main:main"
 [project.urls]
 "Homepage" = "https://github.com/farjad-hasan/kagazkit"
 "Bug Tracker" = "https://github.com/farjad-hasan/kagazkit/issues"
+"Changelog" = "https://github.com/farjad-hasan/kagazkit/blob/main/CHANGELOG.md"
+"Security" = "https://github.com/farjad-hasan/kagazkit/security/policy"
 "LinkedIn" = "https://www.linkedin.com/in/farjadh/"
 "X" = "https://x.com/im_farjad"
 
