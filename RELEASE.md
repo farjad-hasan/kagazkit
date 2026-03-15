@@ -1,7 +1,7 @@
 # Release Checklist
 
-Use this checklist to publish a new KagazKit release and keep the GitHub
-release page aligned with PyPI.
+Use this checklist to publish a new KagazKit release and keep GitHub Releases,
+the Windows binary, and PyPI aligned.
 
 ## 1) Update version
 
@@ -32,29 +32,35 @@ path\to\python -m build --outdir kagazkit/release-dist kagazkit
 path\to\python -m twine check kagazkit/release-dist/*
 ```
 
-## 4) Draft a GitHub release
+## 4) Push the release tag
 
-- Create a new release draft in GitHub.
-- Use the same version number as `pyproject.toml` (e.g., `v0.1.3`).
-- Add a brief changelog for the release.
+- Push the matching tag (for example, `v0.1.8`).
+- The tag triggers the release workflow that:
+  - publishes the Python package to PyPI
+  - builds `KagazKit.exe`
+  - runs the packaged GUI smoke test
+  - generates `KagazKit.exe.sha256`
+  - publishes a GitHub release with both Windows assets attached
 
-## 5) Publish to PyPI
+## 5) Verify the published release
 
-```bash
-python -m twine upload release-dist/*
-```
+- Confirm the GitHub release includes:
+  - `KagazKit.exe`
+  - `KagazKit.exe.sha256`
+- Confirm the release notes mention:
+  - the Windows `.exe` is unsigned, so SmartScreen may warn
+  - users should download only from the official release page
+  - users can verify the SHA256 checksum in PowerShell
+- Confirm the PyPI release is available for the same version tag.
 
-## 6) Finalize the GitHub release
-
-- Attach the latest `KagazKit.exe` if you are publishing the Windows binary.
-- Publish the release draft after PyPI upload succeeds.
-
-## 7) Release acceptance checklist
+## 6) Release acceptance checklist
 
 - `pytest` passes on the release candidate.
 - Package build succeeds.
 - `twine check` passes for the built artifacts.
 - Windows `.exe` build succeeds.
+- The packaged GUI smoke test passes.
 - The GitHub release has the correct tag and release notes.
-- The packaged `KagazKit.exe` is attached when publishing the Windows binary.
+- The GitHub release includes both `KagazKit.exe` and `KagazKit.exe.sha256`.
+- The checksum file uses the format `<sha256>  KagazKit.exe`.
 - The tag-triggered PyPI workflow succeeds.

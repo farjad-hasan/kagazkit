@@ -87,6 +87,31 @@ What to do:
 
 ## Build Or Packaging Problems
 
+### Windows protected your PC / SmartScreen
+
+Symptom:
+
+- Windows shows `Windows protected your PC`
+- Microsoft Defender SmartScreen says KagazKit is an unrecognized app
+
+What it means:
+
+- KagazKit is currently unsigned, so SmartScreen may warn even when the app is the official release build.
+- This warning does not by itself mean KagazKit was identified as malware.
+
+What to check:
+
+- confirm you downloaded `KagazKit.exe` from the official [GitHub Releases](https://github.com/farjad-hasan/kagazkit/releases) page
+- confirm the release also includes `KagazKit.exe.sha256`
+- in PowerShell, run `Get-FileHash .\KagazKit.exe -Algorithm SHA256`
+- compare the SHA256 output to the value stored in `KagazKit.exe.sha256`
+
+What to do:
+
+- if the hash matches, you have the official published build for that release
+- if the hash does not match, delete the file and download it again from the release page
+- if you prefer not to run unsigned binaries, use the PyPI package or build from source instead
+
 ### `No module named build.__main__`
 
 Symptom:
