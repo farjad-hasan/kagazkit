@@ -101,6 +101,13 @@ jobs:
         python build_app.py
         if (!(Test-Path dist\KagazKit.exe)) { throw "KagazKit.exe was not generated" }
 
+    - name: Smoke-test Windows executable launch
+      run: |
+        $process = Start-Process -FilePath .\dist\KagazKit.exe -PassThru
+        Start-Sleep -Seconds 4
+        if ($process.HasExited) { throw "KagazKit.exe exited before the smoke window completed" }
+        Stop-Process -Id $process.Id -Force
+
     - name: Upload Windows executable artifact
       uses: actions/upload-artifact@v4
       with:

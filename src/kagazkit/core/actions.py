@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import List, Union
 
 from PIL import Image
-from PyPDF2 import PdfMerger, PdfReader, PdfWriter
+from pypdf import PdfReader, PdfWriter
 
 from .validators import FileValidationError, Validator
 
@@ -23,13 +23,14 @@ class PDFManager:
             raise PDFActionError(f"Validation failed: {e}")
 
         try:
-            merger = PdfMerger()
+            writer = PdfWriter()
             for path in file_paths:
-                merger.append(str(path))
+                writer.append(str(path))
 
             output_path = Path(output_path)
-            merger.write(str(output_path))
-            merger.close()
+            with open(output_path, "wb") as f:
+                writer.write(f)
+            writer.close()
             return output_path
         except Exception as e:
             raise PDFActionError(f"Failed to merge PDFs: {e}")
