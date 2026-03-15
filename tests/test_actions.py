@@ -99,3 +99,4 @@ class TestPDFManager:
         img2.convert.assert_called_with("RGB")
         # Ensure save was called on first image
         img1.save.assert_called_once()
+        mock_validator.assert_called_once_with(["1.png", "2.jpg"], mode="image")
