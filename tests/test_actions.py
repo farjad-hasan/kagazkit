@@ -51,7 +51,7 @@ class TestPDFManager:
         bad_pdf = tmp_path / "bad.pdf"
         bad_pdf.write_bytes(b"not a pdf")
 
-        with pytest.raises(PDFActionError, match="Validation failed: Invalid PDF"):
+        with pytest.raises(PDFActionError, match="Validation failed: File does not look like a valid PDF"):
             PDFManager.merge_pdfs([bad_pdf], tmp_path / "merged.pdf")
 
     @patch("kagazkit.core.actions.PdfWriter")
@@ -129,10 +129,22 @@ class TestPDFManager:
         # Mock Images
         img1 = MagicMock()
         img1.mode = "RGB"
+        img1.copy.return_value = img1
+
         img2 = MagicMock()
         img2.mode = "RGBA"
-        
-        mock_img_open.side_effect = [img1, img2]
+        converted_img2 = MagicMock()
+        img2.convert.return_value = converted_img2
+
+        cm1 = MagicMock()
+        cm1.__enter__.return_value = img1
+        cm1.__exit__.return_value = False
+
+        cm2 = MagicMock()
+        cm2.__enter__.return_value = img2
+        cm2.__exit__.return_value = False
+
+        mock_img_open.side_effect = [cm1, cm2]
         
         output = tmp_path / "images.pdf"
         
@@ -143,6 +155,8 @@ class TestPDFManager:
         assert result == output
         mock_img_open.assert_any_call(p1)
         mock_img_open.assert_any_call(p2)
+        # Ensure RGB images are copied before the file handle closes
+        img1.copy.assert_called_once()
         # Ensure conversion to RGB happened for RGBA image
         img2.convert.assert_called_with("RGB")
         # Ensure save was called on first image
@@ -168,12 +182,12 @@ class TestPDFManager:
         unsupported_path = tmp_path / "sample.webp"
         unsupported_path.write_bytes(b"fake webp content")
 
-        with pytest.raises(PDFActionError, match="Invalid Image"):
+        with pytest.raises(PDFActionError, match="Unsupported image format"):
             PDFManager.convert_images_to_pdf([unsupported_path], tmp_path / "sample.pdf")
 
     def test_convert_images_rejects_corrupted_jpeg(self, tmp_path):
         corrupted_path = tmp_path / "broken.jpg"
         corrupted_path.write_bytes(b"not a valid jpeg")
 
-        with pytest.raises(PDFActionError, match="Invalid Image"):
+        with pytest.raises(PDFActionError, match="corrupted"):
             PDFManager.convert_images_to_pdf([corrupted_path], tmp_path / "sample.pdf")

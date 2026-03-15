@@ -90,12 +90,15 @@ python src/kagazkit/main.py
 ```
 
 For concrete workflows and expected inputs, see [docs/usage.md](docs/usage.md).
+For planned product direction and upcoming feature priorities, see [ROADMAP.md](ROADMAP.md).
+For common failures and packaging-specific guidance, see [docs/troubleshooting.md](docs/troubleshooting.md).
 
 ## Troubleshooting
 
 - If image-to-PDF fails, confirm the file is `.png`, `.jpg`, or `.jpeg` and not a renamed unsupported format.
 - If you are using the Windows `.exe`, compare its version against the latest GitHub release before reporting a conversion issue.
 - If packaging commands fail locally with `No module named build.__main__`, follow the parent-directory build instructions in [RELEASE.md](RELEASE.md).
+- For step-by-step fixes and bug-reporting prep, see [docs/troubleshooting.md](docs/troubleshooting.md).
 
 ## Project Status
 
@@ -134,13 +137,19 @@ For contributor entry points, see [docs/help-wanted.md](docs/help-wanted.md).
 
 See [RELEASE.md](RELEASE.md) for the release checklist, including drafting a GitHub release and publishing to PyPI.
 
+## Product Roadmap
+
+See [ROADMAP.md](ROADMAP.md) for the current product roadmap, including near-term and later feature priorities.
+
 ## Project Hygiene
 
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 - Maintainers: [MAINTAINERS.md](MAINTAINERS.md)
+- Product roadmap: [ROADMAP.md](ROADMAP.md)
 - Security policy: [SECURITY.md](SECURITY.md)
 - Support policy: [SUPPORT.md](SUPPORT.md)
 - Usage examples: [docs/usage.md](docs/usage.md)
+- Troubleshooting: [docs/troubleshooting.md](docs/troubleshooting.md)
 - Help wanted: [docs/help-wanted.md](docs/help-wanted.md)
 - Issue tracker: [GitHub Issues](https://github.com/farjad-hasan/kagazkit/issues)
 

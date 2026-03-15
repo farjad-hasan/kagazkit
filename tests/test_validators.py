@@ -38,8 +38,24 @@ class TestValidator:
     def test_validate_pdf_fail(self, tmp_path):
         f = tmp_path / "bad.pdf"
         f.write_bytes(b"bad")
-        with pytest.raises(FileValidationError):
+        with pytest.raises(FileValidationError, match="does not look like a valid PDF"):
             Validator.validate_pdf(f)
+
+    def test_validate_pdf_missing_file(self):
+        with pytest.raises(FileValidationError, match="does not exist"):
+            Validator.validate_pdf("ghost.pdf")
+
+    def test_validate_image_reports_unsupported_format(self, tmp_path):
+        f = tmp_path / "img.webp"
+        f.write_bytes(b"fake webp")
+        with pytest.raises(FileValidationError, match="Unsupported image format"):
+            Validator.validate_image(f)
+
+    def test_validate_image_reports_corruption(self, tmp_path):
+        f = tmp_path / "img.jpg"
+        f.write_bytes(b"not a jpeg")
+        with pytest.raises(FileValidationError, match="corrupted"):
+            Validator.validate_image(f)
 
     def test_validate_paths_pdf(self, tmp_path):
         p1 = tmp_path / "1.pdf"
@@ -54,5 +70,11 @@ class TestValidator:
     def test_validate_paths_fail(self, tmp_path):
         p1 = tmp_path / "1.pdf"
         p1.write_bytes(b"not pdf")
-        with pytest.raises(FileValidationError):
+        with pytest.raises(FileValidationError, match="does not look like a valid PDF"):
             Validator.validate_paths([p1], mode="pdf")
+
+    def test_validate_paths_rejects_unknown_mode(self, tmp_path):
+        p1 = tmp_path / "1.pdf"
+        p1.write_bytes(b"%PDF")
+        with pytest.raises(FileValidationError, match="Unsupported validation mode"):
+            Validator.validate_paths([p1], mode="zip")

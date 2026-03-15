@@ -47,9 +47,11 @@ class PDFManager:
 
             images = []
             for path in valid_paths:
-                img = Image.open(path)
-                if img.mode != 'RGB':
-                    img = img.convert('RGB')
+                with Image.open(path) as img:
+                    if img.mode != "RGB":
+                        img = img.convert("RGB")
+                    else:
+                        img = img.copy()
                 images.append(img)
 
             output_path = Path(output_path)
@@ -65,6 +67,10 @@ class PDFManager:
                 img.close()
 
             return output_path
+        except PDFActionError:
+            raise
+        except FileValidationError as e:
+            raise PDFActionError(f"Validation failed: {e}")
         except Exception as e:
             raise PDFActionError(f"Failed to convert images: {e}")
 

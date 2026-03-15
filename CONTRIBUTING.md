@@ -35,7 +35,7 @@ See [docs/help-wanted.md](docs/help-wanted.md) for contributor-friendly entry po
 - `help wanted` marks work the project would benefit from soon
 - `needs reproduction` marks bugs that need a minimal reproducible case
 
-For larger changes, open or comment on an issue first so the work stays aligned with the current roadmap.
+For larger changes, open or comment on an issue first so the work stays aligned with [ROADMAP.md](ROADMAP.md).
 
 ## Any contributions you make will be under the MIT Software License
 

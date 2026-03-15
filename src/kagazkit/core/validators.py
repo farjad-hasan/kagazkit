@@ -18,6 +18,10 @@ class Validator:
     _JPEG_SIGNATURE = b"\xff\xd8\xff"
 
     @staticmethod
+    def _image_format_list() -> str:
+        return ", ".join(sorted(Validator.ALLOWED_IMAGE_EXTENSIONS))
+
+    @staticmethod
     def is_pdf(file_path: Union[str, Path]) -> bool:
         """
         Checks if a file is a valid PDF by checking its header.
@@ -73,8 +77,31 @@ class Validator:
         """
         Validates a single PDF file. Raises FileValidationError if invalid.
         """
-        if not Validator.is_pdf(file_path):
-            raise FileValidationError(f"File {file_path} is not a valid PDF")
+        path = Path(file_path)
+        if not path.exists():
+            raise FileValidationError(f"File does not exist: {path}")
+        if not Validator.is_pdf(path):
+            raise FileValidationError(
+                f"File does not look like a valid PDF: {path}"
+            )
+
+    @staticmethod
+    def validate_image(file_path: Union[str, Path]):
+        """
+        Validates a single image file. Raises FileValidationError if invalid.
+        """
+        path = Path(file_path)
+        if not path.exists():
+            raise FileValidationError(f"File does not exist: {path}")
+        if path.suffix.lower() not in Validator.ALLOWED_IMAGE_EXTENSIONS:
+            raise FileValidationError(
+                "Unsupported image format for "
+                f"{path}. Supported formats: {Validator._image_format_list()}"
+            )
+        if not Validator.is_image(path):
+            raise FileValidationError(
+                f"Image could not be opened or is corrupted: {path}"
+            )
 
     @staticmethod
     def validate_paths(file_paths: List[Union[str, Path]], mode="pdf") -> List[Path]:
@@ -89,13 +116,11 @@ class Validator:
         for p in file_paths:
             path = Path(p)
             if mode == "pdf":
-                if Validator.is_pdf(path):
-                    validated.append(path)
-                else:
-                    raise FileValidationError(f"Invalid PDF: {path}")
+                Validator.validate_pdf(path)
+                validated.append(path)
             elif mode == "image":
-                if Validator.is_image(path):
-                    validated.append(path)
-                else:
-                    raise FileValidationError(f"Invalid Image: {path}")
+                Validator.validate_image(path)
+                validated.append(path)
+            else:
+                raise FileValidationError(f"Unsupported validation mode: {mode}")
         return validated
