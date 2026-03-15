@@ -18,6 +18,25 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 5. Make sure your code lints.
 6. Issue that pull request!
 
+## Where Help Is Most Useful
+
+KagazKit is currently maintained by one primary maintainer, so contributions are especially useful in areas that reduce review and release risk:
+
+- packaging and Windows `.exe` reliability
+- real-file regression tests for PDF and image workflows
+- troubleshooting and onboarding documentation
+- reproducible bug reports with sample inputs when safe to share
+
+See [docs/help-wanted.md](docs/help-wanted.md) for contributor-friendly entry points.
+
+## Labels and Coordination
+
+- `good first issue` marks smaller, contained changes
+- `help wanted` marks work the project would benefit from soon
+- `needs reproduction` marks bugs that need a minimal reproducible case
+
+For larger changes, open or comment on an issue first so the work stays aligned with the current roadmap.
+
 ## Any contributions you make will be under the MIT Software License
 
 In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
