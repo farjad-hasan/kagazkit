@@ -97,9 +97,15 @@ For concrete workflows and expected inputs, see [docs/usage.md](docs/usage.md).
 - If you are using the Windows `.exe`, compare its version against the latest GitHub release before reporting a conversion issue.
 - If packaging commands fail locally with `No module named build.__main__`, follow the parent-directory build instructions in [RELEASE.md](RELEASE.md).
 
+## Project Status
+
+KagazKit is an actively maintained single-maintainer open-source project. The project is releaseable and documented, but reviews and support still depend on one primary maintainer.
+
+For maintainer ownership and expectations, see [MAINTAINERS.md](MAINTAINERS.md).
+
 ## Maintainer and Support
 
-KagazKit is primarily maintained by Farjad Hasan.
+KagazKit is currently maintained by Farjad Hasan.
 
 - Pull requests and issues are reviewed on a best-effort basis.
 - Security reports should follow [SECURITY.md](SECURITY.md) instead of public issues.
@@ -112,6 +118,18 @@ KagazKit is primarily maintained by Farjad Hasan.
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
+## Help Wanted
+
+KagazKit is open to outside contributions, especially in areas that reduce single-maintainer risk or improve user experience.
+
+- Windows packaged-app testing and release automation
+- GUI-focused end-to-end smoke tests
+- documentation improvements and troubleshooting guides
+- bug reproduction for file conversion edge cases
+- polish for onboarding, accessibility, and release notes
+
+For contributor entry points, see [docs/help-wanted.md](docs/help-wanted.md).
+
 ## Releasing
 
 See [RELEASE.md](RELEASE.md) for the release checklist, including drafting a GitHub release and publishing to PyPI.
@@ -119,9 +137,11 @@ See [RELEASE.md](RELEASE.md) for the release checklist, including drafting a Git
 ## Project Hygiene
 
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
+- Maintainers: [MAINTAINERS.md](MAINTAINERS.md)
 - Security policy: [SECURITY.md](SECURITY.md)
 - Support policy: [SUPPORT.md](SUPPORT.md)
 - Usage examples: [docs/usage.md](docs/usage.md)
+- Help wanted: [docs/help-wanted.md](docs/help-wanted.md)
 - Issue tracker: [GitHub Issues](https://github.com/farjad-hasan/kagazkit/issues)
 
 ## License

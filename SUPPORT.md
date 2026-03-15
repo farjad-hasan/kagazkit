@@ -20,6 +20,7 @@ Open an issue here: https://github.com/farjad-hasan/kagazkit/issues
 
 ## Response Expectations
 
+- KagazKit is currently maintained by one primary maintainer.
 - security reports: acknowledgement within 48 hours
 - standard issues and pull requests: best effort, typically within 7 days
 
