@@ -11,6 +11,7 @@ This project follows a simple, release-based changelog.
 - Expanded project governance, contributor guidance, support policy, and release documentation.
 - Added stronger CI expectations for package validation and Windows release confidence.
 - Increased real-file test coverage for core PDF and image workflows.
+- Migrated from `PyPDF2` to `pypdf` and added a Windows executable launch smoke check in CI.
 
 ## [0.1.6] - 2026-03-15
 

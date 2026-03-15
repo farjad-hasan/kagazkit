@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from PIL import Image
-from PyPDF2 import PdfReader, PdfWriter
+from pypdf import PdfReader, PdfWriter
 
 from kagazkit.core.actions import PDFActionError, PDFManager
 
@@ -19,11 +19,11 @@ def create_pdf(path: Path, pages: int = 1) -> Path:
 
 class TestPDFManager:
     @patch("kagazkit.core.validators.Validator.validate_paths")
-    @patch("kagazkit.core.actions.PdfMerger")
-    def test_merge_pdfs_success(self, mock_merger, mock_validator, tmp_path):
+    @patch("kagazkit.core.actions.PdfWriter")
+    def test_merge_pdfs_success(self, mock_writer, mock_validator, tmp_path):
         # Setup mocks
         mock_validator.return_value = [Path("a.pdf"), Path("b.pdf")]
-        mock_merger_instance = mock_merger.return_value
+        mock_writer_instance = mock_writer.return_value
         
         output = tmp_path / "merged.pdf"
         
@@ -32,9 +32,9 @@ class TestPDFManager:
         
         # Verify
         assert result == output
-        assert mock_merger_instance.append.call_count == 2
-        mock_merger_instance.write.assert_called_once()
-        mock_merger_instance.close.assert_called_once()
+        assert mock_writer_instance.append.call_count == 2
+        mock_writer_instance.write.assert_called_once()
+        mock_writer_instance.close.assert_called_once()
 
     def test_merge_pdfs_real_files(self, tmp_path):
         first_pdf = create_pdf(tmp_path / "one.pdf", pages=1)
