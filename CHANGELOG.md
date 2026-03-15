@@ -6,10 +6,13 @@ This project follows a simple, release-based changelog.
 
 ## [Unreleased]
 
+## [0.1.8] - 2026-03-15
+
 ### Changed
 
 - Automated Windows release assets now include a `KagazKit.exe.sha256` checksum sidecar and SmartScreen guidance in release notes.
 - Added official SmartScreen/checksum verification guidance to the README, troubleshooting docs, and release checklist.
+- Added a reusable GitHub release template with a checksum verification example.
 
 ## [0.1.7] - 2026-03-15
 
