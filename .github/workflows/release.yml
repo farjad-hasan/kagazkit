@@ -98,27 +98,10 @@ jobs:
         name: windows-release-assets
         path: release-assets
 
-    - name: Write release notes
-      shell: bash
-      run: |
-        cat > release-notes.md <<'EOF'
-        ## Highlights
-        - Windows releases now include a `KagazKit.exe.sha256` checksum sidecar.
-        - KagazKit is currently unsigned, so Microsoft Defender SmartScreen may warn before launching the `.exe`.
-        - Download the Windows binary only from this official GitHub release page.
-        - Before running `KagazKit.exe`, verify the checksum in PowerShell:
-
-        ```powershell
-        Get-FileHash .\KagazKit.exe -Algorithm SHA256
-        ```
-
-        Compare the SHA256 output to the value in `KagazKit.exe.sha256`.
-        EOF
-
     - name: Publish GitHub release
       uses: softprops/action-gh-release@v2
       with:
-        body_path: release-notes.md
+        body_path: .github/release-template.md
         files: |
           release-assets/KagazKit.exe
           release-assets/KagazKit.exe.sha256
