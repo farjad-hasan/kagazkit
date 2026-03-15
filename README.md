@@ -55,6 +55,11 @@ pip install kagazkit
 
 Download the latest packaged Windows build from the [GitHub Releases](https://github.com/farjad-hasan/kagazkit/releases) page when you want a no-Python install.
 
+- The Windows build is currently unsigned, so Microsoft Defender SmartScreen may show an "unrecognized app" warning.
+- Download `KagazKit.exe` only from the official GitHub Releases page.
+- Each release also includes `KagazKit.exe.sha256` so you can verify the download before running it.
+- In PowerShell, run `Get-FileHash .\KagazKit.exe -Algorithm SHA256` and compare the result to the value in `KagazKit.exe.sha256`.
+
 ### From Source
 
 1.  Clone the repository:
